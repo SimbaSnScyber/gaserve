@@ -1,0 +1,237 @@
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: Gaserve Users API
+  description: Gaserve Users API
+  contact:
+    email: info@commandquality.co.za
+host: localhost:8080
+basePath: /gaserve/v1
+schemes:
+ - https
+ - http
+paths:
+  /users:
+    get:
+      tags:
+      - users
+      summary: gets all users
+      operationId: getUsers
+      description: Returns the list of all users
+      produces:
+      - application/json
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/User'
+        400:
+          description: Bad Request.
+          schema:
+            $ref: "#/definitions/Error"
+        500:
+          description:  Unexpected Error.
+          schema:
+            $ref: "#/definitions/Error"
+        204:
+            description: No content
+            schema:
+              $ref: "#/definitions/Error"
+        404:
+          description: User not found
+          schema:
+            $ref: "#/definitions/Error"
+    post:
+      tags:
+      - users
+      summary: Adding a new user
+      operationId: addUser
+      description: Adds a new user
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: user
+        description: user object to be added
+        schema:
+          $ref: "#/definitions/User"
+      responses:
+        201:
+          description: User created
+        400:
+          description: Invalid User object
+          schema:
+            $ref: "#/definitions/Error"
+        409:
+          description: User already exists
+          schema:
+            $ref: "#/definitions/Error"
+  /users/{id}:
+    get:
+      tags:
+      - users
+      summary: gets user by id
+      operationId: getUserById
+      description: Returns a user object
+      produces:
+      - application/json
+      parameters:
+      - in: path
+        name: id
+        description: Id of the user being retrieved
+        required: true
+        type: string
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/User'
+        400:
+          description: Bad Request.
+          schema:
+            $ref: "#/definitions/Error"
+        
+        500:
+          description:  Unexpected Error.
+          schema:
+            $ref: "#/definitions/Error"
+        204:
+            description: No content
+            schema:
+              $ref: "#/definitions/Error"
+        404:
+          description: User not found
+          schema:
+            $ref: "#/definitions/Error"
+    put:
+      tags:
+      - users
+      summary: update a user
+      operationId: updateUser
+      description: updates user information
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: path
+        name: id
+        description: user id to be updated
+        type: string
+        required: true
+      - in: body
+        name: user
+        description: user object to be added
+        schema:
+          $ref: "#/definitions/updateUser"
+      responses:
+        200:
+          description: User was updated successfully
+        400:
+          description: Invalid User object
+          schema:
+            $ref: "#/definitions/Error"
+        404:
+          description: User does not exists
+          schema:
+            $ref: "#/definitions/Error"
+        500:
+          description: Unexpected error
+          schema:
+            $ref: "#/definitions/Error"
+definitions:
+  Error:
+    type: object
+    required:
+      - errorCode
+      - errorMessage
+    properties:
+      errorCode:
+        type: integer
+      errorMessage:
+        type: string
+  User:
+    type: object
+    required:
+    - id
+    - name
+    - email
+    - status
+    - region
+    - retailer
+    - active
+    - dateCreated
+    - dateUpdated
+    - updatedBy
+    properties:
+      id:
+        type: string
+        format: uuid
+      name:
+        type: string
+      email:
+        type: string
+      status:
+        type: string
+        enum: [UNBALANCING, ACTIVE, DISABLED, REGISTERED]
+      region:
+        type: string
+      retailer:
+        type: string
+      active:
+        type: boolean
+      dateCreated:
+        type: string
+        format: date-time
+        example: "2016-08-29T09:12:33.001Z"
+      dateUpdated:
+        type: string
+        format: date-time
+      updatedBy:
+        type: string
+      roles:
+        type: array
+        items:
+          $ref: "#/definitions/Item"
+      groups:
+        type: array
+        items:
+          $ref: "#/definitions/Item"
+  Item:
+    type: object
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+  updateUser:
+    properties:
+      id:
+        type: string
+        format: uuid
+      name:
+        type: string
+      email:
+        type: string
+      status:
+        type: string
+        enum: [UNBALANCING, ACTIVE, DISABLED, REGISTERED]
+      region:
+        type: string
+      retailer:
+        type: string
+      active:
+        type: boolean
+      dateCreated:
+        type: string
+        format: date-time
+        example: "2016-08-29T09:12:33.001Z"
+      dateUpdated:
+        type: string
+        format: date-time
+      updatedBy:
+        type: string

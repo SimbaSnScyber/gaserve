@@ -1,0 +1,173 @@
+swagger: "2.0"
+info:
+  description: "Gaserve Sales API for processing sales"
+  version: "1.0"
+  title: "Gaserve Sales API"
+  termsOfService: "http://swagger.io/terms/"
+host: "localhost:8080"
+basePath: "/gaserve/v1"
+consumes:
+- application/json
+produces:
+- application/json
+schemes:
+- "https"
+- "http"
+paths:
+  /sales:
+    post:
+      tags:
+      - "sale"
+      summary: "Add a new sale(s) to the sales DB"
+      description: "Add a new sale(s) to the sales DB"
+      operationId: "addSales"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "sales"
+        description: "Sale(s) object that nedds to be added to DB"
+        required: true
+        schema:
+          $ref: "#/definitions/Sale"
+      responses:
+        200:
+          description: "Success"
+        405:
+          description: "Invalid input"
+          schema:
+            $ref: '#/definitions/Error'
+        404:
+          description: Invalid Receiving Id
+        500:
+          description: Unxected Error
+          schema:
+            $ref: '#/definitions/Error'
+    get:
+      tags:
+      - Product
+      summary: Retrieve as Sales by search criteria
+      description: Pass a specific search criteria for sales
+      produces:
+      - application/json
+      parameters:
+      - name: fromDate
+        in: query
+        description: The start date of the sales
+        required: false
+        type: string
+        format: date
+      - name: toDate
+        in: query
+        description: The end date of the sales
+        required: false
+        type: string
+        format: date
+      responses:
+        200:
+          description: sales were found by the criteria
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Sale'
+        404:
+          description: Invalid Sale Id
+          schema:
+            $ref: '#/definitions/Error'
+        500:
+          description: Unxected Error
+          schema:
+            $ref: '#/definitions/Error'
+  /sales/{id}:
+    get:
+      tags:
+      - Product
+      summary: Retrieve as Sale by id
+      description: Pass a specific id to retrieve the correspoding sale
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        description: The id of the sale
+        required: true
+        type: string
+      responses:
+        200:
+          description: A sale was found by the id
+          schema:
+            $ref: '#/definitions/Sale'
+        404:
+          description: Invalid Sale Id
+          schema:
+            $ref: '#/definitions/Error'
+        500:
+          description: Unxected Error
+          schema:
+            $ref: '#/definitions/Error'
+
+definitions:
+  Sale:
+    type: "object"
+    properties:
+      id:
+        type: string
+      active:
+        type: "boolean"
+      dateCreated:
+        type: "string"
+        format: "date-time"
+      dateUpdated:
+        type: "string"
+        format: "date-time"
+      updatedBy:
+        type: "string"
+      user:
+        type: "string"
+      consumer:
+        type: "string"
+      items:
+        type: "array"
+        items:
+          $ref: "#/definitions/SaleItem"
+      totalExVat:
+        type: "number"
+        format: "double"
+      totalInclVat:
+        type: "number"
+        format: "double"
+      vat:
+        type: "number"
+        format: "double"
+      price:
+        type: "number"
+        format: "double"
+      vatRate:
+        type: "number"
+        format: "double"
+  SaleItem:
+    type: "object"
+    properties:
+      productId:
+        type: "string"
+      quantity:
+        type: "integer"
+        format: "int32"
+      price:
+        type: "number"
+        format: "double"
+      saleDate:
+        type: "string"
+        format: "date-time"
+
+  Error:
+    type: object
+    required:
+    - errorCode
+    properties:
+      errorCode:
+        type: string
+      errorMessage:
+        type: string #test

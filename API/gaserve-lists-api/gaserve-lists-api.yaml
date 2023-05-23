@@ -1,0 +1,101 @@
+swagger: '2.0'
+info:
+  description: Gaserve List API
+  version: "1.0.0"
+  title: Gaserve List API
+host: "localhost:8080"
+basePath: /gaserve/v1
+schemes:
+  - https
+  - http
+paths:
+  /lists/{id}:
+    get:
+      tags:
+        - lists
+      summary: Finds lists by tags
+      description: Multiple tags can be provided with comma seperated strings. These tags may include the name of a list or list number.
+      operationId: getList
+      produces:
+        - application/json
+        - application/xml
+      parameters:
+        - in: path
+          name: id
+          description: The listId of the list being searched for
+          required: true
+          type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/List"
+        "401":
+            description: Unauthorized
+            schema:
+             $ref: "#/definitions/Error"
+        "400":
+            description: Bad Request
+            schema:
+             $ref: "#/definitions/Error"
+        "500":
+           description: Internal Server Error
+           schema:
+            $ref: "#/definitions/Error"
+  /lists:
+    get:
+      tags:
+        - lists
+      summary: Finds all lists by tags
+      description: Multiple tags can be provided with comma seperated strings. These tags may include the name of a list or list number.
+      operationId: getLists
+      produces:
+        - application/json
+        - application/xml
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/List"
+        "401":
+            description: Unauthorized
+            schema:
+             $ref: "#/definitions/Error"
+        "400":
+            description: Bad Request
+            schema:
+             $ref: "#/definitions/Error"
+        "500":
+           description: Internal Server Error
+           schema:
+            $ref: "#/definitions/Error"
+
+definitions:
+  List:
+    type: object
+    properties:
+      id: 
+        type: string
+      description:
+        type: array
+        items:
+          $ref: "#/definitions/CodeDescription"
+  CodeDescription:
+    type: object
+    properties:
+      code: 
+        type: string
+      description:
+        type: string
+  Error:
+    type: object
+    properties:
+      code:
+        type: string
+      description:
+        type: string
+

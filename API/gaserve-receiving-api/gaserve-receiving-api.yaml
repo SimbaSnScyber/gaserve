@@ -1,0 +1,7 @@
+{
+  "email": "string",
+  "token": "string",
+  "ip": "string",
+  "mac": "string",
+  "deviceType": "string"
+}

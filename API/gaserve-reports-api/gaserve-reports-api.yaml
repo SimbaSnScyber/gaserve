@@ -1,0 +1,95 @@
+---
+swagger: "2.0"
+info:
+  description: Gaserve Reports API
+  version: 1.0.0
+  title: Gaserve Reports API
+  contact:
+    email:  info@commandquality.co.za
+  
+host: localhost
+basePath: /gaserve/v1
+schemes:
+- https
+paths:
+  /reports:
+    get:
+      tags:
+      - Reports
+      summary: searches for a report
+      description: 
+        By passing in the appropriate options, you can search for
+        reports
+      operationId: searchReport
+      produces:
+      - application/json
+      parameters:
+      - name: date
+        in: query
+        description: Pass an optional date of the report
+        required: false
+        type: string
+      responses:
+        200:
+          description: search results matching criteria
+          schema:
+            $ref: '#/definitions/SalesReport'
+        400:
+          description: bad input parameter
+          schema:
+            $ref: '#/definitions/Error'
+        500:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+definitions:
+  SalesReport:
+    type: object
+    properties:
+      salesToday:
+        $ref: '#/definitions/Sales'
+      salesYesterday:
+        $ref: '#/definitions/Sales'
+      sales3DaysAgo:
+        $ref: '#/definitions/Sales'
+      thisMonthSales:
+        $ref: '#/definitions/Sales'
+      lastMonthSales:
+        $ref: '#/definitions/Sales'
+      avalableStock:
+        $ref: '#/definitions/Sales'
+      receivedToday:
+        $ref: '#/definitions/Sales'
+      openingStock:
+        $ref: '#/definitions/Sales'
+  Sales:
+    type: object
+    properties:
+      gasTotalAmount:
+        type: number
+        format: double
+      gasQuantity:
+        type: number
+        format: double
+      stovesTotalAmount:
+        type: number
+        format: double
+      stovesQuantity:
+        type: number
+        format: double
+      cylindersTotalAmount:
+        type: number
+        format: double
+      cylindersQuantity:
+        type: number
+        format: double
+
+  Error:
+    type: object
+    required:
+    - errorCode
+    properties:
+      errorCode:
+        type: string
+      errorMessage:
+        type: string

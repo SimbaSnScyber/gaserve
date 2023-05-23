@@ -1,0 +1,6 @@
+/target
+.idea
+gaserve-lists-api/gaserve-lists-api.iml
+gaserve-receiving-api/gaserve-receiving-api.iml
+gaserve-sales-api/gaserve-sales-api.iml
+gaserve-users-api/gaserve-user-api.iml

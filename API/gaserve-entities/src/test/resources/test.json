@@ -1,0 +1,46 @@
+[
+  {
+    "mime": "multipart/mixed; boundary=\"94eb2c05e1ae13f46605577b84c2\"",
+    "from": [
+      "amu@agilemotion.co.za"
+    ],
+    "to": [
+      "leansys@outlook.com"
+    ],
+    "cc": null,
+    "bcc": null,
+    "date": null,
+    "subject": "Fwd: FW: Rudi test att with quotes 123",
+    "body": "PGI+RnJvbTo8L2I+IFthbXVAYWdpbGVtb3Rpb24uY28uemFdPGJyPjxiPlNlbnQ6PC9iPiBbbGVh\r\nbnN5c0BvdXRsb29rLmNvbV08YnI+PGI+RGF0ZTo8L2I+IDI0IEF1Z3VzdCAyMDE3IDEwOjIxIEFN\r\nPGJyPjxiPlN1YmplY3Q6PC9iPiBGd2Q6IEZXOiBSdWRpIHRlc3QgYXR0IHdpdGggcXVvdGVzIDEy\r\nMzxwPjwvcD4gCiBqYXZheC5tYWlsLmludGVybmV0Lk1pbWVNdWx0aXBhcnRAN2JhYmE4",
+    "subjectParameters": null,
+    "bodyParameters": null,
+    "attachments": [
+      {
+        "mime": "text/plain",
+        "from": [],
+        "to": [],
+        "cc": null,
+        "bcc": null,
+        "date": null,
+        "subject": null,
+        "body": "PGI+RnJvbTo8L2I+IFtdPGJyPjxiPlNlbnQ6PC9iPiBbXTxicj48Yj5EYXRlOjwvYj4gMjQgQXVn\r\ndXN0IDIwMTcgMTA6MjEgQU08YnI+PGI+U3ViamVjdDo8L2I+IG51bGw8cD48L3A+IAog",
+        "subjectParameters": null,
+        "bodyParameters": null,
+        "fileName": "attachment_1.html"
+      },
+      {
+        "mime": "application/pdf; name=\"Tesstr2saaaaaaaaa - Copy (4).pdf\"",
+        "from": null,
+        "to": null,
+        "cc": null,
+        "bcc": null,
+        "date": null,
+        "subject": null,
+        "body": "Y29tLnN1bi5tYWlsLnV0aWwuQkFTRTY0RGVjb2RlclN0cmVhbUAxNDNmZTBl",
+        "subjectParameters": null,
+        "bodyParameters": null,
+        "fileName": "Tesstr2saaaaaaaaa - Copy (4).pdf"
+      }
+    ]
+  }
+]

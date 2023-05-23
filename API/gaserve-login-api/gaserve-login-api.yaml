@@ -1,0 +1,108 @@
+swagger: "2.0"
+info:
+  version: 1.0.0
+  title: Gaserve Login Api
+  license:
+    name: MIT
+host: localhost:8080
+basePath: /v1
+schemes:
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /login:
+    post:
+      summary: Authenticates a User
+      operationId: AuthoriseUser
+      tags:
+        - Login
+      parameters:
+        - in: body
+          name: Login
+          required: true
+          description: Parameter required in login request.
+          schema:
+           $ref: "#/definitions/Login"
+      responses:
+        303:
+          description: A User object
+          schema:
+              $ref: "#/definitions/User"
+        403:
+          description: "Not Authorised to use Gaserve"
+          schema:
+                type: string
+                example: Unauthorised, please contact your manager
+        default:
+          description: Unexpected error
+          schema:
+                $ref: '#/definitions/Error'
+            
+definitions:
+  User:
+    type: object
+    required:
+      - id
+      - email
+    properties:
+      id:
+        type: string
+        description: The user ID.
+      active:
+        type: boolean
+        description: The status of the logged In user
+      dateCreated:
+        type: string
+        format: date 
+        description: Data the user was created
+      dateUpdated:
+        type: string
+        format: date 
+        description: Data the user profile was updated
+      updateBy:
+        type: string 
+        description: The person who updated the users profile
+      email:
+        type: string
+        description: The email associated with the user 
+      group:
+        type: string
+        enum: [admin, managers, sales]
+      role:
+        type: string
+        enum: [admin, manger, salesperson]
+      country:
+        type: string
+      retryCount:
+        type: integer
+      userLocked:
+        type: boolean
+  Error:
+    required:
+      - code
+      - message
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string
+  Login:
+    type: object
+    required: 
+      - email
+      - token
+    properties:
+      email:
+        type: string
+      token:
+        type: string
+      ip:
+        type: string
+      mac:
+        type: string       
+      deviceType:
+        type: string

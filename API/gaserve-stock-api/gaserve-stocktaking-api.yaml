@@ -1,0 +1,157 @@
+---
+swagger: "2.0"
+info:
+  description: Gaserve Stocktaking API
+  version: 1.0.0
+  title: Gaserve Stocktaking API
+  contact:
+    email: info@commandquality.co.za
+host: localhost
+basePath: /gaserve/v1
+tags:
+- name: Stocktaking
+  description: Stocktaking
+schemes:
+- https
+paths:
+  /stocktakings:
+    get:
+      tags:
+      - stocktaking
+      summary: Returns all stocktake entries
+      description: Returns a map of all stocktake entries
+      operationId: getStocktaking
+      produces:
+      - application/json
+      parameters:
+      - name: date
+        in: query
+        description: pass an optional search date for looking up inventory
+        required: false
+        type: string
+      responses:
+        201:
+          description: Successfully created
+          schema:
+            $ref: '#/definitions/Error'
+        400:
+          description: Invalid Stocktake
+          schema:
+            $ref: '#/definitions/Error'
+        409:
+          description: Invalid input format
+          schema:
+            $ref: '#/definitions/Error'
+        500:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    post:
+      tags:
+      - stocktaking
+      summary: Add quantity on hand amount after manual stocktake
+      description: ""
+      operationId: addStocktakeQuantity
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: body
+        description: Stock object that needs to be added to the stocktaking
+        required: true
+        schema:
+          $ref: '#/definitions/Stocktaking'
+      responses:
+        201:
+          description: Successfully created
+          schema:
+            $ref: '#/definitions/Error'
+        400:
+          description: Invalid Stocktake
+          schema:
+            $ref: '#/definitions/Error'
+        409:
+          description: Invalid input format
+          schema:
+            $ref: '#/definitions/Error'
+        500:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+
+  /stocktakings/{id}:
+    get:
+      tags:
+      - stocktaking
+      summary: Retrieve a stocktake by id
+      description: Retrieve all stocktakes using id
+      operationId: getStocktakingById
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        description: return stocktake by id
+        required: true
+        type: string
+      responses:
+        200:
+          description: Successful operation
+          schema:
+            $ref: '#/definitions/Stocktaking'
+        400:
+          description: Invalid input format supplied
+          schema:
+            $ref: '#/definitions/Error'
+        404:
+          description: Invalid Id supplied
+          schema:
+            $ref: '#/definitions/Error'
+        500:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+definitions:
+
+  Stocktaking:
+    type: object
+    required:
+    - entryDate
+    properties:
+      id:
+        type: string
+      stockItems:
+        type: "array"
+        items:
+          $ref: '#/definitions/Stock'
+      entryDate:
+        type: string
+        format: date
+      userId:
+        type: string
+  Stock:
+    type: object
+    properties:
+      product:
+        $ref: '#/definitions/Product'
+      quantity:
+        type: integer
+        format: int32
+
+  Product:
+    type: object
+    properties:
+      id:
+        type: string
+  Error:
+    type: object
+    required:
+    - errorCode
+    properties:
+      errorCode:
+        type: string
+      errorMessage:
+        type: string
+
